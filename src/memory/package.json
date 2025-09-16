@@ -1,0 +1,29 @@
+{
+  "name": "@modelcontextprotocol-codex/server-memory",
+  "version": "0.1.0",
+  "description": "Codex MCP memory server backed by a knowledge graph",
+  "license": "MIT",
+  "author": "OpenAI (https://openai.com)",
+  "homepage": "https://github.com/openai/codex-servers",
+  "bugs": "https://github.com/openai/codex-servers/issues",
+  "type": "module",
+  "bin": {
+    "codex-mcp-server-memory": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && shx chmod +x dist/*.js",
+    "prepare": "npm run build",
+    "watch": "tsc --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "shx": "^0.3.4",
+    "typescript": "^5.6.2"
+  }
+}

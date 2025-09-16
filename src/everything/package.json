@@ -1,0 +1,35 @@
+{
+  "name": "@modelcontextprotocol-codex/server-everything",
+  "version": "0.1.0",
+  "description": "Codex MCP server showcasing the full protocol surface",
+  "license": "MIT",
+  "author": "OpenAI (https://openai.com)",
+  "homepage": "https://github.com/openai/codex-servers",
+  "bugs": "https://github.com/openai/codex-servers/issues",
+  "type": "module",
+  "bin": {
+    "codex-mcp-server-everything": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && shx cp instructions.md dist/ && shx chmod +x dist/*.js",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "start": "node dist/index.js",
+    "start:sse": "node dist/sse.js",
+    "start:streamableHttp": "node dist/streamableHttp.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.18.0",
+    "express": "^4.21.1",
+    "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.23.5"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "shx": "^0.3.4",
+    "typescript": "^5.6.2"
+  }
+}

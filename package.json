@@ -1,0 +1,27 @@
+{
+  "name": "@modelcontextprotocol-codex/servers",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Codex-tailored Model Context Protocol servers",
+  "license": "MIT",
+  "author": "OpenAI (https://openai.com)",
+  "homepage": "https://openai.com",
+  "bugs": "https://github.com/openai/codex-servers/issues",
+  "type": "module",
+  "workspaces": [
+    "src/*"
+  ],
+  "files": [],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "watch": "npm run watch --workspaces",
+    "publish-all": "npm publish --workspaces --access public",
+    "link-all": "npm link --workspaces"
+  },
+  "dependencies": {
+    "@modelcontextprotocol-codex/server-everything": "workspace:*",
+    "@modelcontextprotocol-codex/server-memory": "workspace:*",
+    "@modelcontextprotocol-codex/server-filesystem": "workspace:*",
+    "@modelcontextprotocol-codex/server-sequential-thinking": "workspace:*"
+  }
+}

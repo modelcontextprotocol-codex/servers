@@ -120,154 +120,18 @@ After installation, you can run it as a script using:
 python -m mcp_server_git
 ```
 
-## Configuration
+## Codex configuration
 
-### Usage with Claude Desktop
+Add this block to your Codex MCP configuration file (for example `~/.config/codex/mcp.toml`) to run the Git server via stdio:
 
-Add this to your `claude_desktop_config.json`:
-
-<details>
-<summary>Using uvx</summary>
-
-```json
-"mcpServers": {
-  "git": {
-    "command": "uvx",
-    "args": ["codex-mcp-server-git", "--repository", "path/to/git/repo"]
-  }
-}
-```
-</details>
-
-<details>
-<summary>Using docker</summary>
-
-* Note: replace '/Users/username' with the a path that you want to be accessible by this tool
-
-```json
-"mcpServers": {
-  "git": {
-    "command": "docker",
-    "args": ["run", "--rm", "-i", "--mount", "type=bind,src=/Users/username,dst=/Users/username", "mcp/git"]
-  }
-}
-```
-</details>
-
-<details>
-<summary>Using pip installation</summary>
-
-```json
-"mcpServers": {
-  "git": {
-    "command": "python",
-    "args": ["-m", "mcp_server_git", "--repository", "path/to/git/repo"]
-  }
-}
-```
-</details>
-
-### Usage with VS Code
-
-For quick installation, use one of the one-click install buttons below...
-
-[![Install with UV in VS Code](https://img.shields.io/badge/VS_Code-UV-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=git&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22codex-mcp-server-git%22%5D%7D) [![Install with UV in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-UV-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=git&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22codex-mcp-server-git%22%5D%7D&quality=insiders)
-
-[![Install with Docker in VS Code](https://img.shields.io/badge/VS_Code-Docker-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=git&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22--rm%22%2C%22-i%22%2C%22--mount%22%2C%22type%3Dbind%2Csrc%3D%24%7BworkspaceFolder%7D%2Cdst%3D%2Fworkspace%22%2C%22mcp%2Fgit%22%5D%7D) [![Install with Docker in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-Docker-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=git&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22--rm%22%2C%22-i%22%2C%22--mount%22%2C%22type%3Dbind%2Csrc%3D%24%7BworkspaceFolder%7D%2Cdst%3D%2Fworkspace%22%2C%22mcp%2Fgit%22%5D%7D&quality=insiders)
-
-For manual installation, you can configure the MCP server using one of these methods:
-
-**Method 1: User Configuration (Recommended)**
-Add the configuration to your user-level MCP configuration file. Open the Command Palette (`Ctrl + Shift + P`) and run `MCP: Open User Configuration`. This will open your user `mcp.json` file where you can add the server configuration.
-
-**Method 2: Workspace Configuration**
-Alternatively, you can add the configuration to a file called `.vscode/mcp.json` in your workspace. This will allow you to share the configuration with others.
-
-> For more details about MCP configuration in VS Code, see the [official VS Code MCP documentation](https://code.visualstudio.com/docs/copilot/mcp).
-
-```json
-{
-  "servers": {
-    "git": {
-      "command": "uvx",
-      "args": ["codex-mcp-server-git"]
-    }
-  }
-}
+```toml
+[mcp.servers.git]
+command = "uvx"
+args = ["codex-mcp-server-git", "--repository", "/path/to/git/repo"]
+transport = "stdio"
 ```
 
-For Docker installation:
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "git": {
-        "command": "docker",
-        "args": [
-          "run",
-          "--rm",
-          "-i",
-          "--mount", "type=bind,src=${workspaceFolder},dst=/workspace",
-          "mcp/git"
-        ]
-      }
-    }
-  }
-}
-```
-
-### Usage with [Zed](https://github.com/zed-industries/zed)
-
-Add to your Zed settings.json:
-
-<details>
-<summary>Using uvx</summary>
-
-```json
-"context_servers": [
-  "codex-mcp-server-git": {
-    "command": {
-      "path": "uvx",
-      "args": ["codex-mcp-server-git"]
-    }
-  }
-],
-```
-</details>
-
-<details>
-<summary>Using pip installation</summary>
-
-```json
-"context_servers": {
-  "codex-mcp-server-git": {
-    "command": {
-      "path": "python",
-      "args": ["-m", "mcp_server_git"]
-    }
-  }
-},
-```
-</details>
-
-### Usage with [Zencoder](https://zencoder.ai)
-
-1. Go to the Zencoder menu (...)
-2. From the dropdown menu, select `Agent Tools`
-3. Click on the `Add Custom MCP`
-4. Add the name (i.e. git) and server configuration from below, and make sure to hit the `Install` button
-
-<details>
-<summary>Using uvx</summary>
-
-```json
-{
-    "command": "uvx",
-    "args": ["codex-mcp-server-git", "--repository", "path/to/git/repo"]
-}
-```
-</details>
+Pass additional `--repository` arguments if you want Codex to expose multiple repositories. You can also forward extra flags (for example `--allow-shell` or `--log-level=debug`) by appending them to the `args` list.
 
 ## Debugging
 

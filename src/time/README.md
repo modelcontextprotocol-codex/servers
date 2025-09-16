@@ -35,164 +35,20 @@ After installation, you can run it as a script using:
 python -m mcp_server_time
 ```
 
-## Configuration
+## Codex configuration
 
-### Configure for Claude.app
+Add this block to your Codex MCP configuration file (for example `~/.config/codex/mcp.toml`) to run the time server via stdio using the published package:
 
-Add to your Claude settings:
-
-<details>
-<summary>Using uvx</summary>
-
-```json
-{
-  "mcpServers": {
-    "time": {
-      "command": "uvx",
-      "args": ["codex-mcp-server-time"]
-    }
-  }
-}
+```toml
+[mcp.servers.time]
+command = "uvx"
+args = ["mcp-server-time"]
+transport = "stdio"
+# Optional: override timezone detection
+env = { LOCAL_TIMEZONE = "UTC" }
 ```
-</details>
 
-<details>
-<summary>Using docker</summary>
-
-```json
-{
-  "mcpServers": {
-    "time": {
-      "command": "docker",
-      "args": ["run", "-i", "--rm", "-e", "LOCAL_TIMEZONE", "mcp/time"]
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary>Using pip installation</summary>
-
-```json
-{
-  "mcpServers": {
-    "time": {
-      "command": "python",
-      "args": ["-m", "mcp_server_time"]
-    }
-  }
-}
-```
-</details>
-
-### Configure for Zed
-
-Add to your Zed settings.json:
-
-<details>
-<summary>Using uvx</summary>
-
-```json
-"context_servers": [
-  "codex-mcp-server-time": {
-    "command": "uvx",
-    "args": ["codex-mcp-server-time"]
-  }
-],
-```
-</details>
-
-<details>
-<summary>Using pip installation</summary>
-
-```json
-"context_servers": {
-  "codex-mcp-server-time": {
-    "command": "python",
-    "args": ["-m", "mcp_server_time"]
-  }
-},
-```
-</details>
-
-### Configure for VS Code
-
-For quick installation, use one of the one-click install buttons below...
-
-[![Install with UV in VS Code](https://img.shields.io/badge/VS_Code-UV-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=time&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22codex-mcp-server-time%22%5D%7D) [![Install with UV in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-UV-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=time&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22codex-mcp-server-time%22%5D%7D&quality=insiders)
-
-[![Install with Docker in VS Code](https://img.shields.io/badge/VS_Code-Docker-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=time&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22mcp%2Ftime%22%5D%7D) [![Install with Docker in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-Docker-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=time&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22mcp%2Ftime%22%5D%7D&quality=insiders)
-
-For manual installation, add the following JSON block to your User Settings (JSON) file in VS Code. You can do this by pressing `Ctrl + Shift + P` and typing `Preferences: Open User Settings (JSON)`.
-
-Optionally, you can add it to a file called `.vscode/mcp.json` in your workspace. This will allow you to share the configuration with others.
-
-> Note that the `mcp` key is needed when using the `mcp.json` file.
-
-<details>
-<summary>Using uvx</summary>
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "time": {
-        "command": "uvx",
-        "args": ["codex-mcp-server-time"]
-      }
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary>Using Docker</summary>
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "time": {
-        "command": "docker",
-        "args": ["run", "-i", "--rm", "mcp/time"]
-      }
-    }
-  }
-}
-```
-</details>
-
-### Configure for Zencoder
-
-1. Go to the Zencoder menu (...)
-2. From the dropdown menu, select `Agent Tools`
-3. Click on the `Add Custom MCP`
-4. Add the name and server configuration from below, and make sure to hit the `Install` button
-
-<details>
-<summary>Using uvx</summary>
-
-```json
-{
-    "command": "uvx",
-    "args": ["codex-mcp-server-time"]
-  }
-```
-</details>
-
-### Customization - System Timezone
-
-By default, the server automatically detects your system's timezone. You can override this by adding the argument `--local-timezone` to the `args` list in the configuration.
-
-Example:
-```json
-{
-  "command": "python",
-  "args": ["-m", "mcp_server_time", "--local-timezone=America/New_York"]
-}
-```
+If you prefer to test the fork directly from source, swap the `args` line for `args = ["--from", "./src/time", "codex-mcp-server-time"]`. Remove or edit the `env` line if you prefer automatic timezone detection. Additional CLI flags can be appended to `args` as needed.
 
 ## Example Interactions
 

@@ -45,104 +45,18 @@ After installation, you can run it as a script using:
 python -m mcp_server_fetch
 ```
 
-## Configuration
+## Codex configuration
 
-### Configure for Claude.app
+Add this block to your Codex MCP configuration file (for example `~/.config/codex/mcp.toml`) to run the server with the stdio transport:
 
-Add to your Claude settings:
-
-<details>
-<summary>Using uvx</summary>
-
-```json
-{
-  "mcpServers": {
-    "fetch": {
-      "command": "uvx",
-      "args": ["codex-mcp-server-fetch"]
-    }
-  }
-}
+```toml
+[mcp.servers.fetch]
+command = "uvx"
+args = ["codex-mcp-server-fetch"]
+transport = "stdio"
 ```
-</details>
 
-<details>
-<summary>Using docker</summary>
-
-```json
-{
-  "mcpServers": {
-    "fetch": {
-      "command": "docker",
-      "args": ["run", "-i", "--rm", "mcp/fetch"]
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary>Using pip installation</summary>
-
-```json
-{
-  "mcpServers": {
-    "fetch": {
-      "command": "python",
-      "args": ["-m", "mcp_server_fetch"]
-    }
-  }
-}
-```
-</details>
-
-### Configure for VS Code
-
-For quick installation, use one of the one-click install buttons below...
-
-[![Install with UV in VS Code](https://img.shields.io/badge/VS_Code-UV-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22codex-mcp-server-fetch%22%5D%7D) [![Install with UV in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-UV-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22codex-mcp-server-fetch%22%5D%7D&quality=insiders)
-
-[![Install with Docker in VS Code](https://img.shields.io/badge/VS_Code-Docker-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22mcp%2Ffetch%22%5D%7D) [![Install with Docker in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-Docker-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22mcp%2Ffetch%22%5D%7D&quality=insiders)
-
-For manual installation, add the following JSON block to your User Settings (JSON) file in VS Code. You can do this by pressing `Ctrl + Shift + P` and typing `Preferences: Open User Settings (JSON)`.
-
-Optionally, you can add it to a file called `.vscode/mcp.json` in your workspace. This will allow you to share the configuration with others.
-
-> Note that the `mcp` key is needed when using the `mcp.json` file.
-
-<details>
-<summary>Using uvx</summary>
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "fetch": {
-        "command": "uvx",
-        "args": ["codex-mcp-server-fetch"]
-      }
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary>Using Docker</summary>
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "fetch": {
-        "command": "docker",
-        "args": ["run", "-i", "--rm", "mcp/fetch"]
-      }
-    }
-  }
-}
-```
-</details>
+If you need additional flags, append them to `args`. For example, add "--ignore-robots-txt" to bypass robots.txt checks or "--user-agent=MyCustomAgent" to override the default identifier.
 
 ### Customization - robots.txt
 

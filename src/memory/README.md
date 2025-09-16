@@ -125,116 +125,20 @@ Example:
     - Relations between requested entities
   - Silently skips non-existent nodes
 
-# Usage with Claude Desktop
+## Codex configuration
 
-### Setup
+Add this block to your Codex MCP configuration file (for example `~/.config/codex/mcp.toml`) to start the server over stdio and persist memories:
 
-Add this to your claude_desktop_config.json:
-
-#### Docker
-
-```json
-{
-  "mcpServers": {
-    "memory": {
-      "command": "docker",
-      "args": ["run", "-i", "-v", "claude-memory:/app/dist", "--rm", "mcp/memory"]
-    }
-  }
-}
+```toml
+[mcp.servers.memory]
+command = "npx"
+args = ["-y", "@modelcontextprotocol-codex/server-memory"]
+transport = "stdio"
+# Optional: override the default path for the knowledge graph
+env = { MEMORY_FILE_PATH = "/path/to/custom/memory.json" }
 ```
 
-#### NPX
-```json
-{
-  "mcpServers": {
-    "memory": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol-codex/server-memory"
-      ]
-    }
-  }
-}
-```
-
-#### NPX with custom setting
-
-The server can be configured using the following environment variables:
-
-```json
-{
-  "mcpServers": {
-    "memory": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol-codex/server-memory"
-      ],
-      "env": {
-        "MEMORY_FILE_PATH": "/path/to/custom/memory.json"
-      }
-    }
-  }
-}
-```
-
-- `MEMORY_FILE_PATH`: Path to the memory storage JSON file (default: `memory.json` in the server directory)
-
-# VS Code Installation Instructions
-
-For quick installation, use one of the one-click installation buttons below:
-
-[![Install with NPX in VS Code](https://img.shields.io/badge/VS_Code-NPM-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=memory&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40modelcontextprotocol%2Fserver-memory%22%5D%7D) [![Install with NPX in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-NPM-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=memory&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40modelcontextprotocol%2Fserver-memory%22%5D%7D&quality=insiders)
-
-[![Install with Docker in VS Code](https://img.shields.io/badge/VS_Code-Docker-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=memory&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22-v%22%2C%22claude-memory%3A%2Fapp%2Fdist%22%2C%22--rm%22%2C%22mcp%2Fmemory%22%5D%7D) [![Install with Docker in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-Docker-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=memory&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22-v%22%2C%22claude-memory%3A%2Fapp%2Fdist%22%2C%22--rm%22%2C%22mcp%2Fmemory%22%5D%7D&quality=insiders)
-
-For manual installation, you can configure the MCP server using one of these methods:
-
-**Method 1: User Configuration (Recommended)**
-Add the configuration to your user-level MCP configuration file. Open the Command Palette (`Ctrl + Shift + P`) and run `MCP: Open User Configuration`. This will open your user `mcp.json` file where you can add the server configuration.
-
-**Method 2: Workspace Configuration**
-Alternatively, you can add the configuration to a file called `.vscode/mcp.json` in your workspace. This will allow you to share the configuration with others.
-
-> For more details about MCP configuration in VS Code, see the [official VS Code MCP documentation](https://code.visualstudio.com/docs/copilot/mcp).
-
-#### NPX
-
-```json
-{
-  "servers": {
-    "memory": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol-codex/server-memory"
-      ]
-    }
-  }
-}
-```
-
-#### Docker
-
-```json
-{
-  "servers": {
-    "memory": {
-      "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "-v",
-        "claude-memory:/app/dist",
-        "--rm",
-        "mcp/memory"
-      ]
-    }
-  }
-}
-```
+Remove the `env` line if you are happy with the default `memory.json` stored in the working directory.
 
 ### System Prompt
 
